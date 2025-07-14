@@ -1,8 +1,18 @@
 package com.eteration.simplebanking.model;
 
+import lombok.NoArgsConstructor;
 
-// This class is a place holder you can change the complete implementation
-public class WithdrawalTransaction {
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("WITHDRAWAL")
+@NoArgsConstructor
+public class WithdrawalTransaction extends Transaction {
+    public WithdrawalTransaction(double amount) {
+        super();
+        this.setAmount(amount);
+    }
 }
 
 
