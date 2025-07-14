@@ -12,15 +12,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 @ContextConfiguration(classes = DemoApplication.class)
 class DemoApplicationTests {
-	@Autowired
-	private AccountRepository accountRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
-	@Autowired
-	private AccountService accountService;
-	@Test
-	void contextLoads() {
-		assertNotNull(accountRepository);
-		assertNotNull(accountService);
-	}
+    @Autowired
+    private AccountService accountService;
+
+    @Test
+    void contextLoads() {
+        assertNotNull(accountRepository);
+        assertNotNull(accountService);
+    }
 
 }

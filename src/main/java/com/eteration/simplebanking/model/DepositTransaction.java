@@ -1,6 +1,5 @@
 package com.eteration.simplebanking.model;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

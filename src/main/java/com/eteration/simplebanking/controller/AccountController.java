@@ -2,11 +2,11 @@ package com.eteration.simplebanking.controller;
 
 import com.eteration.simplebanking.dto.TransactionRequestDto;
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
-import com.eteration.simplebanking.model.*;
+import com.eteration.simplebanking.model.Account;
+import com.eteration.simplebanking.model.TransactionStatus;
 import com.eteration.simplebanking.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.reactive.TransactionalOperator;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

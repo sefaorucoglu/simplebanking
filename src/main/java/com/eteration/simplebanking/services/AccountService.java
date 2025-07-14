@@ -22,6 +22,7 @@ public class AccountService {
         return accountRepository.findByAccountNumber(accountNumber).
                 orElseThrow(() -> new NoSuchElementException("Account not found for account ID: " + accountNumber));
     }
+
     @Transactional
     public ResponseEntity<TransactionStatus> credit(String accountNumber, TransactionRequestDto transactionRequestDto) {
         DepositTransaction depositTransaction = new DepositTransaction();
@@ -30,12 +31,13 @@ public class AccountService {
         account.setBalance(account.getBalance() + depositTransaction.getAmount());
         account.post(depositTransaction);
         accountRepository.save(account);
-        return new ResponseEntity<> (new TransactionStatus("OK", account.getTransactions().get(0).getApprovalCode()), HttpStatus.OK);
+        return new ResponseEntity<>(new TransactionStatus("OK", account.getTransactions().get(0).getApprovalCode()), HttpStatus.OK);
     }
+
     @Transactional
     public ResponseEntity<TransactionStatus> debit(String accountNumber, TransactionRequestDto transactionRequestDto) throws InsufficientBalanceException {
         Account account = findAccount(accountNumber);
-        if(account.getBalance() < transactionRequestDto.getAmount()) {
+        if (account.getBalance() < transactionRequestDto.getAmount()) {
             throw new InsufficientBalanceException("Insufficient balance");
         }
         WithdrawalTransaction withdrawalTransaction = new WithdrawalTransaction();
@@ -43,14 +45,15 @@ public class AccountService {
         account.setBalance(account.getBalance() - withdrawalTransaction.getAmount());
         account.post(withdrawalTransaction);
         accountRepository.save(account);
-        return new ResponseEntity<> (new TransactionStatus("OK", account.getTransactions().get(0).getApprovalCode()), HttpStatus.OK);
+        return new ResponseEntity<>(new TransactionStatus("OK", account.getTransactions().get(0).getApprovalCode()), HttpStatus.OK);
     }
+
     @Transactional
     /*There should be more business logic for bill payment,
     but for now just working as balance update, like debit process*/
     public ResponseEntity<TransactionStatus> payBill(String accountNumber, TransactionRequestDto transactionRequestDto) throws InsufficientBalanceException {
         Account account = findAccount(accountNumber);
-        if(account.getBalance() < transactionRequestDto.getAmount()) {
+        if (account.getBalance() < transactionRequestDto.getAmount()) {
             throw new InsufficientBalanceException("Insufficient balance");
         }
         PayPhoneBillTransaction payPhoneBillTransaction = new PayPhoneBillTransaction();
@@ -58,7 +61,7 @@ public class AccountService {
         account.setBalance(account.getBalance() - payPhoneBillTransaction.getAmount());
         account.post(payPhoneBillTransaction);
         accountRepository.save(account);
-        return new ResponseEntity<> (new TransactionStatus("OK", account.getTransactions().get(0).getApprovalCode()), HttpStatus.OK);
+        return new ResponseEntity<>(new TransactionStatus("OK", account.getTransactions().get(0).getApprovalCode()), HttpStatus.OK);
     }
 
 }
