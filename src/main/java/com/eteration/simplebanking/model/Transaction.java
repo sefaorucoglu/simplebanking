@@ -17,6 +17,12 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = DepositTransaction.class, name = "DEPOSIT"),
+        @JsonSubTypes.Type(value = WithdrawalTransaction.class, name = "WITHDRAWAL"),
+        @JsonSubTypes.Type(value = PayPhoneBillTransaction.class, name = "PHONE")
+})
 public abstract class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

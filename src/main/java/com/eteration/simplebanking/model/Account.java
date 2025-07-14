@@ -2,6 +2,7 @@ package com.eteration.simplebanking.model;
 
 
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Data
 @Entity
 public class Account {
@@ -23,7 +23,9 @@ public class Account {
     public String owner;
     public String accountNumber;
     public double balance;
-    @OneToMany
+
+    @OneToMany(mappedBy = "account",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Transaction> transactions = new ArrayList<>();
 
     public Account(String owner, String accountNumber) {
